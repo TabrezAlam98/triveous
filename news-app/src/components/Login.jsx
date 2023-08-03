@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { Box, Button, Heading, Input,Text } from "@chakra-ui/react";
 import { Navigate, useNavigate } from "react-router-dom";
-
-const Signup = () => {
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {app} from "../firebase"
+const auth = getAuth();
+const Login = () => {
   const [email, setEmai] = useState("");
   const [password, setPassword] = useState("");
   const [error,setError]=useState(false)
   const navigate=useNavigate()
 
-  let userData = JSON.parse(localStorage.getItem("users"));
+  
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(userData);
+    signInWithEmailAndPassword(auth, email, password).then(value=>console.log("login success"))
+    .then(value=>navigate("/"))
+    .catch((err)=>console.log(err))
+
 setError(true)
     if(!email){
       setError("Please fill the email")
@@ -21,21 +26,7 @@ setError(true)
       setError("Please fill the password")
       return;
     }
-    for (let i = 0; i < userData.length; i++) {
-      if (userData[i].email != email) {
-        setError("wrong email")
-        break;
-      } else if (userData[i].password != password) {
-        setError("wrong password")
-        break;
-      } else if (
-        userData[i].email == email &&
-        userData[i].password == password
-      ) {
-       alert("Logged in successfuly")
-       navigate("/")
-      } 
-    }
+   
   };
 
   return (
@@ -73,4 +64,4 @@ setError(true)
   );
 };
 
-export default Signup;
+export default Login;

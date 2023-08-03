@@ -1,6 +1,9 @@
 import React,{useState} from 'react'
 import { Box, Button, Heading,Input ,Text} from '@chakra-ui/react'
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {app} from '../firebase'
+const auth = getAuth();
 
 const Signup = () => {
 
@@ -9,12 +12,11 @@ const Signup = () => {
   const [error,setError]=useState(false)
   const navigate=useNavigate()
 
-  const payload={
-    email,password
-  }
-  let userData=JSON.parse(localStorage.getItem("users")) || []
   const handleSubmit=(e)=>{
     e.preventDefault()
+    createUserWithEmailAndPassword(auth, email, password).then((value)=>alert("user added"))
+    .then(value=>navigate("/login"))
+    .catch(err=>console.log(err))
     if(!email){
       setError("Please fill the email")
       return;
@@ -23,13 +25,7 @@ const Signup = () => {
       setError("Please fill the password")
       return;
     }
-    
- userData.push(payload)
- alert("user added")
- setError(true)
- navigate("/login")
- localStorage.setItem('users',JSON.stringify(userData))
-console.log(userData)
+
   }
   
   return (
