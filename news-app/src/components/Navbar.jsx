@@ -6,7 +6,7 @@ function Navbar() {
     <div className={style.container}>
       <div className={style.main}>
         <Link className={style.link}  to="/">News</Link>
-        <Link className={style.link} to="/wishlist">Wishlist</Link>
+        <Link className={style.link} to="/favoriate">Favoriate Articles</Link>
         <Link className={style.link} to="/login">Login</Link>
         <Link className={style.link} to="/signup">Signup</Link>
       </div>

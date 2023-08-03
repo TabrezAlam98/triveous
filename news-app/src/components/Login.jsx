@@ -1,32 +1,31 @@
 import React, { useState } from "react";
-import { Box, Button, Heading, Input,Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Input, Text } from "@chakra-ui/react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {app} from "../firebase"
+import { app } from "../firebase";
 const auth = getAuth();
 const Login = () => {
   const [email, setEmai] = useState("");
   const [password, setPassword] = useState("");
-  const [error,setError]=useState(false)
-  const navigate=useNavigate()
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
-  
   const handleLogin = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password).then(value=>console.log("login success"))
-    .then(value=>navigate("/"))
-    .catch((err)=>console.log(err))
+    signInWithEmailAndPassword(auth, email, password)
+      .then((value) => console.log("login success"))
+      .then((value) => navigate("/"))
+      .catch((err) => console.log(err));
 
-setError(true)
-    if(!email){
-      setError("Please fill the email")
+    setError(true);
+    if (!email) {
+      setError("Please fill the email");
       return;
     }
-    if(!password){
-      setError("Please fill the password")
+    if (!password) {
+      setError("Please fill the password");
       return;
     }
-   
   };
 
   return (
@@ -56,7 +55,7 @@ setError(true)
         placeholder="Password"
         mb="5"
       />
-      {error &&<Text>{error}</Text>}
+      {error && <Text>{error}</Text>}
       <Button colorScheme="blue" w="60%" onClick={handleLogin}>
         Login
       </Button>
