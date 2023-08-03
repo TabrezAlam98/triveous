@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
-import { AiOutlineHeart } from 'react-icons/ai';
+import { AiOutlineHeart ,AiOutlineBars} from 'react-icons/ai';
+import { BsGrid} from 'react-icons/bs';
+import Login from './Login'
 import {
   SimpleGrid,
   Box,
@@ -18,10 +20,11 @@ import {
 
 const News = () => {
   const [data, setData] = useState([]);
+  const [toggle,setToggle]=useState(true)
 
 
   const fetchData =  () => {
-    axios.get("https://newsapi.org/v2/everything?q=bitcoin&apiKey=92b256ea57174afdb6dac3356ce54565")
+    axios.get("https://gnews.io/api/v4/search?q=example&apikey=7649cce50f41bf2f49be221e574950d7")
       // "https://newsapi.org/v2/everything?q=tesla&from=2023-07-02&sortBy=publishedAt&apiKey=92b256ea57174afdb6dac3356ce54565"
   .then((res)=>{
     
@@ -40,15 +43,17 @@ const News = () => {
     <Box  w="100%">
     
       <>
+      
 
       
           <SimpleGrid columns={[1, 2, 2]} w="100%" spacing="10px">
           {data.map((el)=>{
       return(
+        
             <Card >
               <CardBody>
                 <Image
-                  src={el.urlToImage}
+                  src={el.image}
                   alt={el.author}
                   borderRadius="md"
                 />
